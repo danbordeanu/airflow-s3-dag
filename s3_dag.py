@@ -37,7 +37,7 @@ def create_new_destination():
 
 
 # call Almeria API to create SFT gateway
-def deploy_sftp_gateway():
+def deploy_sftp_gateway(name):
     url = 'https://api.almeriaindustries.com/api/user-registry/v1/release'
     headers = {
         'accept': 'application/json',
@@ -48,7 +48,7 @@ def deploy_sftp_gateway():
         "chart": "orangegrove/ingester-sftp",
         "destination": "mybucket",
         "externalSFTPPort": "22",
-        "name": "my-release",
+        "name": name,
         "password": "SecurePassword",
         "username": "john.smith",
     }
@@ -59,6 +59,7 @@ def deploy_sftp_gateway():
 sftp_gateway_deploy_task = PythonOperator(
     task_id='sftp_gateway_deploy',
     python_callable=deploy_sftp_gateway,
+    op_kwargs={'name': 'my-release'},
     dag=dag,
 )
 
