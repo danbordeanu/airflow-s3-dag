@@ -123,8 +123,8 @@ def transfer_to_sftp():
         operation='put',
         host=load_balancer_ip,
         port=int(external_sftp_port),  # Update with the appropriate port number if needed
-        username='username',  # Update with the appropriate username
-        password='password',  # Update with the appropriate password
+        username='john.smith',  # Update with the appropriate username
+        password='SecurePassword',  # Update with the appropriate password
         dag=dag,
     )
     return sftp_transfer_task
