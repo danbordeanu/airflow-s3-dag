@@ -51,6 +51,7 @@ def deploy_sftp_gateway(name):
         "name": name,
         "password": "SecurePassword",
         "username": "john.smith",
+        "version": "0.3.0"
     }
 
     response = requests.put(url, headers=headers, json=payload)
