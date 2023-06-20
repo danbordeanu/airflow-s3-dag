@@ -94,7 +94,7 @@ def transfer_to_sftp():
         task_id='sftp_transfer',
         ssh_conn_id='sftp_connection',
         local_filepath='/path/to/output/file.csv',  # Update with your output file path
-        remote_filepath='/path/on/sftp/file.csv',
+        remote_filepath='/file.csv',
         operation='put',
         host=load_balancer_ip,
         port=int(external_sftp_port),  # Update with the appropriate port number if needed
