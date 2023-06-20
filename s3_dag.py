@@ -46,7 +46,7 @@ def deploy_sftp_gateway():
     }
     payload = {
         "chart": "orangegrove/ingester-sftp",
-        "destination": "my-sftp-destination",
+        "destination": "mybucket",
         "externalSFTPPort": "22",
         "name": "my-release",
         "password": "SecurePassword",
