@@ -62,7 +62,7 @@ sftp_gateway_deploy_task = PythonOperator(
     dag=dag,
 )
 
-def get_load_balancer_ip():
+def get_load_balancer_ip(name):
     url = 'https://api.almeriaindustries.com/api/user-registry/v1/release'
     headers = {
         'accept': 'application/json',
@@ -73,17 +73,21 @@ def get_load_balancer_ip():
     response.raise_for_status()
 
     data = response.json()
-    load_balancer_ip = data['data'][0]['Network']['loadBalancerIP']
-    external_sftp_port = data['data'][0]['Network']['externalSFTPPort']
+    for item in data['data']:
+        if item['Name'] == name:
+            load_balancer_ip = item['Network']['loadBalancerIP']
+            external_sftp_port = item['Network']['externalSFTPPort']
+            return load_balancer_ip, external_sftp_port
 
-    return load_balancer_ip, external_sftp_port
+    # If the specific name is not found, return None or raise an exception
+    return None
 
 def execute_data_processing():
     # Your code to execute the data processing tasks and generate the output file
     pass
 
 def transfer_to_sftp():
-    load_balancer_ip, external_sftp_port = get_load_balancer_ip()
+    load_balancer_ip, external_sftp_port = get_load_balancer_ip("my-release")
     sftp_transfer_task = SFTPOperator(
         task_id='sftp_transfer',
         ssh_conn_id='sftp_connection',
